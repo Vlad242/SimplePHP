@@ -16,9 +16,27 @@ class View
 
     public function render($title, $vars = [])
     {
-        ob_start();
-        require 'application/views/'.$this->path.'.php';
-        $content = ob_get_clean();
-        require 'application/views/layout/'.$this->layout.'.php';
+        extract($vars);
+        if (file_exists('application/views/'.$this->path.'.php')) {
+            ob_start();
+            require 'application/views/' . $this->path . '.php';
+            $content = ob_get_clean();
+            require 'application/views/layout/' . $this->layout . '.php';
+        }else{
+            View::errorCode(404);
+        }
+    }
+
+    public function redirect($url)
+    {
+        header('location: '.$url);
+        exit;
+    }
+    
+    public static function errorCode($code)
+    {
+        http_response_code($code);
+        require 'application/views/errors/'.$code.'.php';
+        exit;
     }
 }
