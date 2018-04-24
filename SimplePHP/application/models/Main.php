@@ -8,6 +8,8 @@ class Main extends Model
 {
     public function getPosts()
     {
-        $this->db;
+        $result = $this->db->findAllBy('Select username, email, title, content, image from Post ');
+        return $result;
+
     }
 }
