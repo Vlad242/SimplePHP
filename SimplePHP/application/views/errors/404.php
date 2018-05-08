@@ -1,3 +1,3 @@
 <h1>Error 404!</h1>
 <a href="/">HOME</a>
-<img src="..public\images\errors\404.jpg">
+<img src="/public/images/errors/404.jpg">

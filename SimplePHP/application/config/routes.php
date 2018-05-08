@@ -1,20 +1,38 @@
 <?php
 
 return [
+    //MainController
     '' => [
         'controller' => 'main',
         'action' => 'index',
     ],
-    'account/login' => [
-        'controller' => 'account',
+    '{page:\d+}' => [
+        'controller' => 'main',
+        'action' => 'page',
+    ],
+    'post/show/' => [
+        'controller' => 'main',
+        'action' => 'postShow',
+    ],
+    'post/create/' => [
+        'controller' => 'main',
+        'action' => 'postCreate',
+    ],
+    //AdminController
+    'admin/login' => [
+        'controller' => 'admin',
         'action' => 'login',
     ],
-    'account/register' => [
-        'controller' => 'account',
-        'action' => 'register',
+    'admin/logout' => [
+        'controller' => 'admin',
+        'action' => 'logout',
     ],
-    'posts/show' => [
-        'controller' => 'posts',
-        'action' => 'show',
+    'admin/edit' => [
+        'controller' => 'admin',
+        'action' => 'edit',
+    ],
+    'admin/delete' => [
+        'controller' => 'admin',
+        'action' => 'delete',
     ],
 ];

@@ -14,7 +14,7 @@ class DataBase
         $this->db = new PDO('mysql:dbname='.$config['dbname'].';host='.$config['host'].'', $config['user'], $config['password']);
     }
 
-    public function query($sql,$params = [])
+    public function query($sql, $params = [])
     {
         $stat = $this->db->prepare($sql);
         if (!empty($params)){
