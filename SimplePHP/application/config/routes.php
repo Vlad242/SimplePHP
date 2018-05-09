@@ -6,15 +6,11 @@ return [
         'controller' => 'main',
         'action' => 'index',
     ],
-    '{page:\d+}' => [
+    '(?<id>\d+)' => [
         'controller' => 'main',
         'action' => 'page',
     ],
-    'post/show/' => [
-        'controller' => 'main',
-        'action' => 'postShow',
-    ],
-    'post/create/' => [
+    'post/create' => [
         'controller' => 'main',
         'action' => 'postCreate',
     ],
@@ -27,12 +23,16 @@ return [
         'controller' => 'admin',
         'action' => 'logout',
     ],
-    'admin/edit' => [
+    'admin/edit/(?<id>\d+)' => [
         'controller' => 'admin',
         'action' => 'edit',
     ],
-    'admin/delete' => [
+    'admin/delete/(?<id>\d+)' => [
         'controller' => 'admin',
         'action' => 'delete',
+    ],
+    'admin/view' => [
+        'controller' => 'admin',
+        'action' => 'view',
     ],
 ];

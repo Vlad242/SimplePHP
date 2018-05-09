@@ -8,7 +8,6 @@ class MainController extends Controller
 {
     public function indexAction()
     {
-
         $vars = [
             'posts' => $this->model->getPosts(),
             'links' => $this->model->createLinks(),
@@ -16,9 +15,13 @@ class MainController extends Controller
         $this->view->render('General', $vars);
     }
 
-    public function pageAction()
+    public function pageAction($param)
     {
-        debug($this->route['page']);
+        $vars = [
+            'posts' => $this->model->getPosts($param),
+            'links' => $this->model->createLinks(),
+        ];
+        $this->view->render('Page '.$param, $vars);
     }
 
     public function postShowAction()
@@ -29,6 +32,16 @@ class MainController extends Controller
 
     public function postCreateAction ()
     {
+        if (!empty($_POST))
+        {
+            if (!$this->model->postValidate($_POST, 'create'))
+            {
+                $this->view->message('error', $this->model->error);
+            }
+            $id = $this->model->postCreate($_POST);
+            $this->view->message('success', $id);
+
+        }
         $this->view->render('New post');
     }
 }

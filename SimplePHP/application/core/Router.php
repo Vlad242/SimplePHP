@@ -5,7 +5,8 @@ namespace application\core;
 class Router
 {
     protected $routes = [];
-    protected $params = [];
+    protected $pageParams = [];
+    private $param;
 
     function __construct()
     {
@@ -17,7 +18,7 @@ class Router
 
     public function add($route, $params)
     {
-        $route = '#^'.$route.'$#';
+        $route = '#^' . $route . '$#';
         $this->routes[$route] = $params;
     }
 
@@ -25,11 +26,13 @@ class Router
     {
         $url = trim($_SERVER['REQUEST_URI'],'/');
         foreach ($this->routes as $route => $params){
-            if (preg_match($route, $url)){
-               $this->params = $params;
+            if (preg_match($route, $url,$matches)){
+
+               $this->pageParams = $params;
+               if (count($matches) > 1){
+                   $this->param = $matches[1];
+               }
                return true;
-            }else{
-                View::errorCode(500);
             }
         }
         return false;
@@ -39,14 +42,18 @@ class Router
     {
         if ($this->match())
         {
-            $path = 'application\controllers\\'.ucfirst($this->params['controller']).'Controller';
+            $path = 'application\controllers\\'.ucfirst($this->pageParams['controller']).'Controller';
             if (class_exists($path))
             {
-               $action = $this->params['action'].'Action';
+               $action = $this->pageParams['action'].'Action';
                if (method_exists($path, $action))
                {
-                   $controller = new $path($this->params);
-                   $controller->$action();
+                   $controller = new $path($this->pageParams);
+                   if (!empty($this->param)){
+                       $controller->$action($this->param);
+                   }else{
+                       $controller->$action();
+                   }
                }else{
                    View::errorCode(404);
                }

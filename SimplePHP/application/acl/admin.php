@@ -5,6 +5,7 @@ return [
         'login',
     ],
     'admin' => [
+        'view',
         'logout',
         'edit',
         'delete',

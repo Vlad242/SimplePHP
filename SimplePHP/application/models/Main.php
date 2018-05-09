@@ -10,15 +10,16 @@ class Main extends Model
     private $offset;
     private $page;
     private $count;
+    public $error;
 
-    public function getPosts($limit = 3, $page = 1)
+    public function getPosts($page = 1, $limit = 3)
     {
         $this->limit = $limit;
         $this->page = $page;
         $this->offset = ($this->page - 1 )* $this->limit;
         $this->count = $this->getCount();
 
-        $result = $this->db->findAllBy('Select username, email, title, content, image from Post LIMIT '.$this->limit.' OFFSET '.$this->offset.';');
+        $result = $this->db->findAllBy('Select username, email, title, content, image, status from Post LIMIT '.$this->limit.' OFFSET '.$this->offset.';');
         return $result;
     }
 
@@ -45,5 +46,47 @@ class Main extends Model
     public function getCount()
     {
         return $this->db->findOneBy('Select COUNT(*) from Post');
+    }
+
+    public function postValidate($post, $type)
+    {
+        $usernameLen = iconv_strlen($post['username']);
+        $titleLen = iconv_strlen($post['title']);
+        $contentLen = iconv_strlen($post['content']);
+
+        if ($usernameLen < 2 or $usernameLen > 20)
+        {
+            $this->error = 'Username must be > 2 and < 20 symbols!';
+            return false;
+        }elseif (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)){
+            $this->error = 'Error email(for example user@gmail.com)!';
+            return false;
+        }elseif ($titleLen < 2 or $titleLen > 50){
+            $this->error = 'Title must be > 2 and < 50 symbols!';
+            return false;
+        }elseif ($contentLen < 2 or $contentLen > 500){
+            $this->error = 'Content must be > 2 and < 500 symbols!';
+            return false;
+        }
+        /*
+        if (empty($_FILES['image']['tmp_name']) and $type == 'create')
+        {
+            $this->error = 'File not selected!';
+            return false;
+        }*/
+        return true;
+    }
+
+    public function postCreate($post)
+    {
+        $params = [
+            'username' => $post['username'],
+            'title' => $post['title'],
+            'content' => $post['content'],
+            'email' => $post['email'],
+            'image' => '/public/images/posts/p1u1.png',
+        ];
+        $this->db->query('INSERT INTO post VALUES(:username,:title,:content,:email,:image)', $params);
+        return $this->db->lastInsertId();
     }
 }

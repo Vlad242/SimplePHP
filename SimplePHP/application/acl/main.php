@@ -3,12 +3,11 @@
 return [
     'all' => [
         'index',
-        'postShow',
+        'page',
         'postCreate',
         'login',
     ],
     'admin' => [
         'index',
-
     ],
 ];

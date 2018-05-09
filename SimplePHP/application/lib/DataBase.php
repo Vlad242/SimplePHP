@@ -12,6 +12,7 @@ class DataBase
     {
         $config =require 'application/config/db.php';
         $this->db = new PDO('mysql:dbname='.$config['dbname'].';host='.$config['host'].'', $config['user'], $config['password']);
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public function query($sql, $params = [])
@@ -36,5 +37,10 @@ class DataBase
     {
         $result = $this->query($sql, $params);
         return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function lastInsertId()
+    {
+        return $this->db->lastInsertId();
     }
 }
