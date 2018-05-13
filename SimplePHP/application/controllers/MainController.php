@@ -12,7 +12,7 @@ class MainController extends Controller
             'posts' => $this->model->getPosts(),
             'links' => $this->model->createLinks(),
         ];
-        $this->view->render('General', $vars);
+        $this->view->render('Posts', $vars);
     }
 
     public function pageAction($param)
@@ -24,12 +24,6 @@ class MainController extends Controller
         $this->view->render('Page '.$param, $vars);
     }
 
-    public function postShowAction()
-    {
-        debug($this->route['id']);
-        $this->view->render('Posts');
-    }
-
     public function postCreateAction ()
     {
         if (!empty($_POST))
@@ -39,7 +33,8 @@ class MainController extends Controller
                 $this->view->message('error', $this->model->error);
             }
             $id = $this->model->postCreate($_POST);
-            $this->view->message('success', $id);
+            $this->model->postUploadImage($_FILES['image']['tmp_name'] ,$id);
+            $this->view->message('success', 'Post created successfuly!Unique identifier '.$id);
 
         }
         $this->view->render('New post');

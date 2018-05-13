@@ -20,7 +20,7 @@ class DataBase
         $stat = $this->db->prepare($sql);
         if (!empty($params)){
             foreach ($params as $key => $val){
-                $stat->bindValue(':'.$key, $val);
+                $stat->bindValue(':'.$key, $val['param'], $val['type']);
             }
         }
         $stat->execute();
