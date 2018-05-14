@@ -6,8 +6,12 @@ return [
         'page',
         'postCreate',
         'login',
+        'setSort',
     ],
     'admin' => [
         'index',
+        'page',
+        'postCreate',
+        'setSort',
     ],
 ];

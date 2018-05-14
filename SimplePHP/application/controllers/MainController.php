@@ -18,17 +18,17 @@ class MainController extends Controller
     public function pageAction($param)
     {
         $vars = [
-            'posts' => $this->model->getPosts($param),
+            'posts' => $this->model->getPosts($param['id']),
             'links' => $this->model->createLinks(),
         ];
-        $this->view->render('Page '.$param, $vars);
+        $this->view->render('Page '.$param['id'], $vars);
     }
 
-    public function postCreateAction ()
+    public function postCreateAction()
     {
         if (!empty($_POST))
         {
-            if (!$this->model->postValidate($_POST, 'create'))
+            if (!$this->model->postValidate($_POST))
             {
                 $this->view->message('error', $this->model->error);
             }
@@ -38,5 +38,12 @@ class MainController extends Controller
 
         }
         $this->view->render('New post');
+    }
+
+    public function setSortAction($param)
+    {
+        $_SESSION['field'] = $param['field'];
+        $_SESSION['type'] = $param['type'];
+        $this->view->redirect('/');
     }
 }

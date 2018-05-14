@@ -16,7 +16,7 @@ class AdminController extends Controller
     {
         $this->view->layout = 'default';
         if (isset($_SESSION['admin'])){
-            $this->view->redirect('/admin/view');
+            $this->view->redirect('/admin/viewList');
         }
         if (!empty($_POST))
         {
@@ -25,8 +25,7 @@ class AdminController extends Controller
                 $this->view->message('error', $this->model->error);
             }
             $_SESSION['admin'] = 1;
-            $this->view->locationRedirect('/admin/view');
-
+            $this->view->locationRedirect('/admin/viewList');
         }
         $this->view->render('Login');
     }
@@ -37,27 +36,88 @@ class AdminController extends Controller
         $this->view->redirect('/admin/login');
     }
 
-    public function editAction()
+    public function editListAction()
     {
+        $vars = [
+            'posts' => $this->model->getPosts(),
+        ];
+        $this->view->render('Posts', $vars);
+    }
+
+    public function editAction($param)
+    {
+        if (!$this->model->postExist($param['id']))
+        {
+            $this->view->errorCode(404);
+        }
         if (!empty($_POST))
         {
             if (!$this->model->postValidate($_POST))
             {
                 $this->view->message('error', $this->model->error);
-            }else{
-                $this->view->message('success', 'ok');
             }
+            $this->model->editPost($_POST, $param['id']);
+            $this->view->message('success', 'Post updated!');
         }
-        $this->view->render('New post');
+        $vars = [
+            'data' => $this->model->postData($param['id'])[0],
+        ];
+        $this->view->render('Edit post #'.$param['id'], $vars);
     }
 
-    public function deleteAction()
+    public function deleteListAction()
     {
-        $this->view->render('Login');
+        $vars = [
+            'posts' => $this->model->getPosts(),
+        ];
+        $this->view->render('Posts', $vars);
     }
 
-    public function viewAction()
+    public function deleteAction($param)
     {
-        $this->view->render('View posts for admin');
+        if (!$this->model->postExist($param['id']))
+        {
+            $this->view->errorCode(404);
+        }
+        $this->model->deletePost($param['id']);
+        $this->view->redirect('/admin/deleteList');
+    }
+
+    public function viewAction($param)
+    {
+        if (!$this->model->postExist($param['id']))
+        {
+            $this->view->errorCode(404);
+        }
+        $vars = [
+            'post' => $this->model->viewPost($param['id'])[0],
+        ];
+        $this->view->render('Post #'.$param['id'], $vars);
+    }
+
+    public function viewListAction()
+    {
+        $vars = [
+            'posts' => $this->model->getPosts(),
+        ];
+        $this->view->render('Posts', $vars);
+    }
+
+    public function statusListAction()
+    {
+        $vars = [
+            'posts' => $this->model->getPosts(),
+        ];
+        $this->view->render('Posts', $vars);
+    }
+
+    public function statusChangeAction($param)
+    {
+        if (!$this->model->postExist($param['id']))
+        {
+            $this->view->errorCode(404);
+        }
+        $this->model->changeStatus($param['id']);
+        $this->view->redirect('/admin/statusList');
     }
 }

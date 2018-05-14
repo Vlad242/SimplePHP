@@ -6,7 +6,7 @@ class Router
 {
     protected $routes = [];
     protected $pageParams = [];
-    private $param;
+    private $param = [];
 
     function __construct()
     {
@@ -27,11 +27,8 @@ class Router
         $url = trim($_SERVER['REQUEST_URI'],'/');
         foreach ($this->routes as $route => $params){
             if (preg_match($route, $url,$matches)){
-
                $this->pageParams = $params;
-               if (count($matches) > 1){
-                   $this->param = $matches[1];
-               }
+               $this->param = $matches;
                return true;
             }
         }
@@ -49,9 +46,11 @@ class Router
                if (method_exists($path, $action))
                {
                    $controller = new $path($this->pageParams);
-                   if (!empty($this->param)){
+                   if (!empty($this->param))
+                   {
                        $controller->$action($this->param);
                    }else{
+
                        $controller->$action();
                    }
                }else{

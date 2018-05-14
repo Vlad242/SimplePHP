@@ -25,11 +25,47 @@
         </nav>
     </div>
 </header>
+
 <content>
     <div class="container">
         <?php echo $content;?>
     </div>
+    <div class="container">
+        <div class="center" align="center">
+            <div class="col-md-12">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Username</button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" type="button" href="/sort/username/ASC">ASC</a>
+                        <a class="dropdown-item" type="button" href="/sort/username/DESC">DESC</a>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Email</button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" type="button" href="/sort/email/ASC">ASC</a>
+                        <a class="dropdown-item" type="button" href="/sort/email/DESC">DESC</a>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Status</button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" type="button" href="/sort/status/ASC">ASC</a>
+                        <a class="dropdown-item" type="button" href="/sort/status/DESC">DESC</a>
+                    </div>
+                </div>
+            </div>
+            <small>
+                Sorting by:
+                <?php echo $_SESSION['field'];?>
+                :
+                <?php echo $_SESSION['type']; ?>
+            </small>
+        </div>
+    </div>
+    <hr>
 </content>
+
 <footer class="footer" style="position: revert; bottom: 0; width: 100%">
     <div class="col-md-12">
         <div class="container">
@@ -38,7 +74,7 @@
                     <h5>Get started</h5>
                     <ul>
                         <li><a href="/">Home</a></li>
-                        <li><a href="/admin/login/">Sign up</a></li>
+                        <li><a href="/admin/login">Sign up</a></li>
                         <li><a href="/post/create">New post</a></li>
                     </ul>
                 </div>

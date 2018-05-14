@@ -11,15 +11,20 @@ class Main extends Model
 {
     private $limit;
     private $page;
-    private $count;
+    private $count = 5;
     public $error;
 
-    public function getPosts($page = 1, $limit = 3)
+    public function getPosts($page = 1, $limit = 3, $field = 'id', $type = 'ASC')
     {
+        if (isset($_SESSION['field']) and isset($_SESSION['type']))
+        {
+            $field = $_SESSION['field'];
+            $type = $_SESSION['type'];
+        }
         $this->limit = $limit;
         $this->page = $page;
         $this->count = $this->getCount();
-        $offset = ($this->page - 1 )* $this->limit;
+        $offset = ($this->page - 1) * $this->limit;
         $params =[
             'limit' => [
                 'param' => $this->limit,
@@ -29,8 +34,16 @@ class Main extends Model
                 'param' => $offset,
                 'type' => PDO::PARAM_INT,
             ],
+            'field' =>[
+                'param' => $field,
+                'type' => PDO::PARAM_STR,
+            ],
+            'type' =>[
+                'param' => $type,
+                'type' => PDO::PARAM_STR,
+            ],
         ];
-        $result = $this->db->findAllBy('Select username, email, title, content, image, status from Post LIMIT :limit OFFSET :offset', $params);
+        $result = $this->db->findAllBy('Select username, email, title, content, image, status from Post ORDER BY :field :type LIMIT :limit OFFSET :offset ;', $params);
         return $result;
     }
 
@@ -59,7 +72,7 @@ class Main extends Model
         return $this->db->findOneBy('Select COUNT(*) from Post');
     }
 
-    public function postValidate($post, $type)
+    public function postValidate($post)
     {
         $usernameLen = iconv_strlen($post['username']);
         $titleLen = iconv_strlen($post['title']);
@@ -79,7 +92,7 @@ class Main extends Model
             $this->error = 'Content must be > 2 and < 500 symbols!';
             return false;
         }
-        if (empty($_FILES['image']['tmp_name']) and $type == 'create')
+        if (empty($_FILES['image']['tmp_name']))
         {
             $this->error = 'File not selected!';
             return false;
@@ -132,5 +145,6 @@ class Main extends Model
             ],
         ];
         $this->db->query('UPDATE Post SET image = :image WHERE id = :id', $params);
+        return 0;
     }
 }

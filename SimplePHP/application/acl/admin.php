@@ -5,9 +5,14 @@ return [
         'login',
     ],
     'admin' => [
-        'view',
         'logout',
+        'view',
         'edit',
         'delete',
+        'viewList',
+        'editList',
+        'deleteList',
+        'statusChange',
+        'statusList',
     ],
 ];
