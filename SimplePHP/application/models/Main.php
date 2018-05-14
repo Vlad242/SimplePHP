@@ -20,6 +20,9 @@ class Main extends Model
         {
             $field = $_SESSION['field'];
             $type = $_SESSION['type'];
+        }else{
+            $_SESSION['field'] = 'id';
+            $_SESSION['type'] = 'ASC';
         }
         $this->limit = $limit;
         $this->page = $page;
