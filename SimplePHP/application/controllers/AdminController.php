@@ -15,7 +15,8 @@ class AdminController extends Controller
     public function loginAction()
     {
         $this->view->layout = 'default';
-        if (isset($_SESSION['admin'])){
+        if (isset($_SESSION['admin']))
+        {
             $this->view->redirect('/admin/viewList');
         }
         if (!empty($_POST))
@@ -27,6 +28,7 @@ class AdminController extends Controller
             $_SESSION['admin'] = 1;
             $this->view->locationRedirect('/admin/viewList');
         }
+
         $this->view->render('Login');
     }
 

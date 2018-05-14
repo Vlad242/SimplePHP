@@ -7,7 +7,7 @@ use PDO;
 
 class Admin extends Model
 {
-    public $error;
+   public $error;
 
    public function loginValidate($post)
    {
@@ -16,7 +16,8 @@ class Admin extends Model
         {
             $this->error = "Login error!";
             return false;
-        }elseif ($config['password'] != $post['password']){
+        }elseif ($config['password'] != $post['password'])
+        {
             $this->error = "Password error!";
             return false;
         }
@@ -33,13 +34,16 @@ class Admin extends Model
         {
             $this->error = 'Username must be > 2 and < 20 symbols!';
             return false;
-        }elseif (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)){
+        }elseif (!filter_var($post['email'], FILTER_VALIDATE_EMAIL))
+        {
             $this->error = 'Error email(for example user@gmail.com)!';
             return false;
-        }elseif ($titleLen < 2 or $titleLen > 50){
+        }elseif ($titleLen < 2 or $titleLen > 50)
+        {
             $this->error = 'Title must be > 2 and < 50 symbols!';
             return false;
-        }elseif ($contentLen < 2 or $contentLen > 500){
+        }elseif ($contentLen < 2 or $contentLen > 500)
+        {
             $this->error = 'Content must be > 2 and < 500 symbols!';
             return false;
         }

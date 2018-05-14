@@ -2,8 +2,8 @@
 
 namespace application\lib;
 
-class Cutter{
-
+class Cutter
+{
     var $image;
     var $image_type;
 

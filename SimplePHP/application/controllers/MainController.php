@@ -34,7 +34,7 @@ class MainController extends Controller
             }
             $id = $this->model->postCreate($_POST);
             $this->model->postUploadImage($_FILES['image']['tmp_name'] ,$id);
-            $this->view->message('success', 'Post created successfuly!Unique identifier '.$id);
+            $this->view->message('Success', 'Post created successfuly!Unique identifier '.$id);
 
         }
         $this->view->render('New post');

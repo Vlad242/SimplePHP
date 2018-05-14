@@ -22,11 +22,11 @@
                 <td><? echo $post['title']; ?></td>
                 <td><? echo $post['content']; ?></td>
                 <td>
-                <?php if ($post['status']):?>
-                    <span class="badge badge-success">Done :)</span>
-                <?php else: ?>
-                    <span class="badge badge-warning">In progress :|</span>
-                <?php endif; ?>
+                    <?php if ($post['status']):?>
+                        <span class="badge badge-success">Done :)</span>
+                    <?php else: ?>
+                        <span class="badge badge-warning">In progress :|</span>
+                    <?php endif; ?>
                 </td>
                 <td>
                     <a href="/admin/statusChange/<? echo $post['id']; ?>" class="btn btn-warning"> Change </a>

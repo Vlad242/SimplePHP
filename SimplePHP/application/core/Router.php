@@ -11,7 +11,8 @@ class Router
     function __construct()
     {
         $arr = require 'application/config/routes.php';
-        foreach ($arr as $key => $val){
+        foreach ($arr as $key => $val)
+        {
            $this->add($key, $val);
         }
     }
@@ -25,8 +26,10 @@ class Router
     public function match()
     {
         $url = trim($_SERVER['REQUEST_URI'],'/');
-        foreach ($this->routes as $route => $params){
-            if (preg_match($route, $url,$matches)){
+        foreach ($this->routes as $route => $params)
+        {
+            if (preg_match($route, $url,$matches))
+            {
                $this->pageParams = $params;
                $this->param = $matches;
                return true;
@@ -50,7 +53,6 @@ class Router
                    {
                        $controller->$action($this->param);
                    }else{
-
                        $controller->$action();
                    }
                }else{

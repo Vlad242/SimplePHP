@@ -65,7 +65,6 @@
     </div>
     <hr>
 </content>
-
 <footer class="footer" style="position: revert; bottom: 0; width: 100%">
     <div class="col-md-12">
         <div class="container">

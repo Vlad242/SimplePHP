@@ -6,7 +6,7 @@
             <form action="/admin/login" method="POST" style="position: center">
                 <div class="form-group">
                     <label>Login</label>
-                     <input type="text" class="form-control" name="login" placeholder="Enter login">
+                    <input type="text" class="form-control" name="login" placeholder="Enter login">
                 </div>
                 <div class="form-group">
                     <label>Password</label>

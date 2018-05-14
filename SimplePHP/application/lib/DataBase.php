@@ -18,8 +18,10 @@ class DataBase
     public function query($sql, $params = [])
     {
         $stat = $this->db->prepare($sql);
-        if (!empty($params)){
-            foreach ($params as $key => $val){
+        if (!empty($params))
+        {
+            foreach ($params as $key => $val)
+            {
                 $stat->bindValue(':'.$key, $val['param'], $val['type']);
             }
         }

@@ -50,14 +50,17 @@ class Main extends Model
     public function createLinks()
     {
         $html = '<div class="pagination">';
-        if($this->count % 3 !== 0){
+        if($this->count % 3 !== 0)
+        {
             $pages = ($this->count / 3) + 1;
         }else{
             $pages = $this->count / 3;
         }
 
-        for ($i = 1; $i <= $pages; $i++){
-            if ($i == $this->page){
+        for ($i = 1; $i <= $pages; $i++)
+        {
+            if ($i == $this->page)
+            {
                 $html .=  '<a class="active" href= "/'.$i.'">'.$i.'</a>';
             }else{
                 $html .=  '<a href="/'.$i.'">'.$i.'</a>';
@@ -82,13 +85,16 @@ class Main extends Model
         {
             $this->error = 'Username must be > 2 and < 20 symbols!';
             return false;
-        }elseif (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)){
+        }elseif (!filter_var($post['email'], FILTER_VALIDATE_EMAIL))
+        {
             $this->error = 'Error email(for example user@gmail.com)!';
             return false;
-        }elseif ($titleLen < 2 or $titleLen > 50){
+        }elseif ($titleLen < 2 or $titleLen > 50)
+        {
             $this->error = 'Title must be > 2 and < 50 symbols!';
             return false;
-        }elseif ($contentLen < 2 or $contentLen > 500){
+        }elseif ($contentLen < 2 or $contentLen > 500)
+        {
             $this->error = 'Content must be > 2 and < 500 symbols!';
             return false;
         }
