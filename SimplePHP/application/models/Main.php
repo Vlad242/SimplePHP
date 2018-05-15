@@ -37,16 +37,8 @@ class Main extends Model
                 'param' => $offset,
                 'type' => PDO::PARAM_INT,
             ],
-            'field' =>[
-                'param' => $field,
-                'type' => PDO::PARAM_STR,
-            ],
-            'type' =>[
-                'param' => $type,
-                'type' => PDO::PARAM_STR,
-            ],
         ];
-        $result = $this->db->findAllBy('Select username, email, title, content, image, status from Post ORDER BY :field :type LIMIT :limit OFFSET :offset ;', $params);
+        $result = $this->db->findAllBy('Select username, email, title, content, image, status from Post ORDER BY '.$field.' '.$type.' LIMIT :limit OFFSET :offset ;', $params);
         return $result;
     }
 
